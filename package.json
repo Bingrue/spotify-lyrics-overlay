@@ -1,16 +1,17 @@
 {
   "name": "spotify-lyrics-overlay",
   "private": true,
-  "version": "0.0.0", 
+  "version": "0.0.0",
   "main": "electron/main.js",
   "type": "module",
   "scripts": {
-  "dev:vite": "vite",
-  "dev:electron": "wait-on http://127.0.0.1:5173 && electron .",
-  "dev": "concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
-  "build": "vite build"
+    "dev:vite": "vite",
+    "dev:electron": "wait-on http://127.0.0.1:5173 && electron .",
+    "dev": "concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
+    "build": "vite build"
   },
   "dependencies": {
+    "opencc-js": "^1.4.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },

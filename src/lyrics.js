@@ -34,6 +34,7 @@ export async function getLyricsForTrack(track) {
   const result = await window.spotifyAPI.getLyrics({
     trackName: track.name,
     artistName: track.artists?.map((artist) => artist.name).join(", ") || "",
+    artistNames: track.artists?.map((artist) => artist.name) || [],
     albumName: track.album?.name || "",
     duration: (track.duration_ms || 0) / 1000,
   });

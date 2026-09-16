@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import { createServer } from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { findLyrics } from "./lyrics.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 let callbackServer = null;
@@ -192,32 +193,7 @@ ipcMain.handle("lyrics:get", async (_event, track) => {
     throw new Error("Track name and artist are required to find lyrics.");
   }
 
-  const params = new URLSearchParams({
-    track_name: track.trackName,
-    artist_name: track.artistName,
-  });
-
-  if (track.albumName) {
-    params.set("album_name", track.albumName);
-  }
-  if (Number.isFinite(track.duration)) {
-    params.set("duration", String(Math.round(track.duration)));
-  }
-
-  const response = await fetch(`https://lrclib.net/api/get?${params}`, {
-    headers: {
-      "User-Agent": "spotify-lyrics-overlay/0.0.0",
-    },
-  });
-
-  if (response.status === 404) {
-    return null;
-  }
-  if (!response.ok) {
-    throw new Error(`Lyrics request failed (${response.status}).`);
-  }
-
-  return response.json();
+  return findLyrics(track);
 });
 
 app.on("activate", () => {
